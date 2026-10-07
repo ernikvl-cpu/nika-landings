@@ -310,15 +310,13 @@
     ['purchase_goal', 'unit_type', 'investment_budget', 'messenger', 'telegram'].forEach((k) => {
       if (fields[k]) body.set(k, fields[k]);
     });
+    // Наш сервер не отдаёт CORS-заголовки → no-cors: ответ не читаем, доставленный запрос = заявка принята.
     const request = fetch(pageConfig.endpoint, {
       method: 'POST',
-      mode: 'cors',
+      mode: 'no-cors',
       body,
       keepalive: true
-    }).then(async (response) => {
-      if (!response.ok || response.type === 'opaque') return false;
-      const result = await response.json().catch(() => ({}));
-      if (result.ok === false) return false;
+    }).then(async () => {
 
       rememberQuizSubmission(token);
 
