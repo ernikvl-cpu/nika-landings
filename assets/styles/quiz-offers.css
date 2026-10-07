@@ -1,0 +1,94 @@
+/* Compact offer typography for the four English guide quizzes. */
+.step[data-step="intro"] h1 { font-size: clamp(32px, 3.2vw, 50px); line-height: 1.09; }
+.offer-points { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 0; margin: 0 0 14px; list-style: none; color: #34445b; font-size: 13px; font-weight: 600; }
+.offer-points li::before { content: "✓"; margin-right: 6px; color: #9d773d; }
+.step[data-step="intro"] .guide-card { margin-top: 12px; }
+@media (max-width: 800px) {
+  .step[data-step="intro"] h1 { font-size: 29px; }
+  .step[data-step="intro"] .lead { font-size: 14px; line-height: 1.36; margin: 9px 0 10px; }
+  .offer-points { font-size: 12px; line-height: 1.2; gap: 4px 9px; margin-bottom: 8px; }
+  .step[data-step="intro"] .guide-card { margin: 8px 0; padding: 10px 12px; }
+}
+@media (max-width: 800px) and (max-height: 740px) {
+  .visual { height: 72px; min-height: 72px; }
+  .panel { min-height: calc(100svh - 124px); padding-top: 49px; padding-bottom: 12px; }
+  .step[data-step="intro"] h1 { font-size: 27px; }
+  .step[data-step="intro"] .lead { font-size: 13px; line-height: 1.28; margin: 7px 0; }
+  .step[data-step="intro"] .eyebrow { font-size: 10px; margin-bottom: 7px; }
+  .offer-points { font-size: 11px; line-height: 1.15; margin-bottom: 5px; }
+  .step[data-step="intro"] .guide-card { margin: 6px 0; padding: 7px 9px; }
+  .step[data-step="intro"] .fine, .bottom { display: none; }
+}
+@media (max-width: 340px) and (max-height: 600px) {
+  .visual { height: 54px; min-height: 54px; }
+  .panel { min-height: calc(100svh - 102px); padding-top: 39px; }
+  .step[data-step="intro"] h1 { font-size: 25px; }
+  .step[data-step="intro"] .lead { font-size: 12px; }
+  .offer-points { font-size: 10px; }
+  .step[data-step="intro"] .guide-card strong { font-size: 12px; }
+  .step[data-step="intro"] .guide-card small { font-size: 10px; }
+  body[data-quiz-step="budget"] .visual { display: none; }
+  body[data-quiz-step="budget"] .panel { min-height: calc(100svh - 48px); }
+  body[data-quiz-step="budget"] legend { font-size: 26px; }
+  body[data-quiz-step="budget"] .hint { font-size: 12px; line-height: 1.3; margin: 9px 0 12px; }
+  body[data-quiz-step="budget"] .choices label { min-height: 48px; padding: 9px 12px; }
+  body[data-quiz-step="budget"] .actions { margin-top: 14px; }
+}
+@media (min-width: 801px) {
+  .panel { padding-top: 46px; padding-bottom: 20px; }
+}
+@media (max-width: 340px) and (max-height: 600px) {
+  .panel { padding-bottom: 8px; }
+}
+@media (max-width: 340px) and (max-height: 600px) {
+  .panel { min-height: calc(100svh - 106px); }
+}
+@media (min-width: 801px) and (max-height: 760px) {
+  .panel { padding-top: 42px; padding-bottom: 12px; }
+  .step[data-step="intro"] h1 { font-size: 36px; }
+  .step[data-step="intro"] .lead { font-size: 15px; line-height: 1.35; margin: 10px 0; }
+  .step[data-step="intro"] .eyebrow { margin-bottom: 8px; }
+  .step[data-step="intro"] .guide-card { margin: 8px 0; padding: 10px 12px; }
+  .step[data-step="intro"] .primary { min-height: 50px; padding: 12px 18px; }
+  .step[data-step="intro"] .fine { margin-top: 8px; }
+}
+.header-tools { display: flex; align-items: center; gap: 16px; }
+.lang-switch { color: #1d3555; font-size: 13px; font-weight: 600; text-decoration: none; border: 1px solid #d7d9dd; border-radius: 8px; padding: 8px 10px; white-space: nowrap; }
+.lang-switch:hover, .lang-switch:focus-visible { background: #f4f0e9; }
+.bot-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.human-step .hint { max-width: 490px; }
+.human-answer { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 17px; font-weight: 600; }
+.human-answer strong { color: #1d3555; font-size: 22px; }
+.human-answer input { width: 94px; height: 52px; padding: 0 14px; border: 1px solid #d7d9dd; border-radius: 11px; background: #fff; color: #1b1e24; font: 18px Inter, Arial, sans-serif; }
+.human-answer input:focus { outline: 2px solid #ad8752; outline-offset: 1px; }
+.greece-quiz .visual-caption { top: auto; bottom: 30px; gap: 8px; }
+.greece-quiz .visual-caption strong { font-size: clamp(22px, 2.2vw, 32px); line-height: 1.12; }
+@media (max-width: 800px) {
+  .header-tools { gap: 8px; }
+  .header-tools span { max-width: 95px; line-height: 1.2; }
+  .lang-switch { font-size: 11px; padding: 6px 8px; }
+  body[data-quiz-step="human"] .visual { display: none; }
+  body[data-quiz-step="human"] .panel { min-height: calc(100svh - 60px); }
+}
+
+/* Keep the location visible in the mobile banner instead of cropping to sky. */
+@media (max-width: 800px) {
+  .visual img { object-position: center 55%; }
+  .visual::after { inset: 50% 0 0; background: linear-gradient(transparent, rgba(8, 18, 33, .46)); }
+  .greece-quiz .visual img { object-position: center 54%; filter: brightness(1.12); }
+  .greece-quiz .visual-caption { right: 18px; gap: 3px; }
+  .greece-quiz .visual-caption strong { font-family: Inter, Arial, sans-serif; font-size: 11px; font-weight: 600; line-height: 1.25; max-width: 390px; text-shadow: 0 1px 4px rgba(0, 0, 0, .7); }
+}
+@media (max-width: 800px) and (max-height: 740px) {
+  .visual { height: 112px; min-height: 112px; }
+  .panel { min-height: calc(100svh - 164px); }
+}
+@media (max-width: 340px) and (max-height: 600px) {
+  .visual { height: 94px; min-height: 94px; }
+  .panel { min-height: calc(100svh - 142px); }
+  .greece-quiz .visual-caption strong { font-size: 10px; line-height: 1.2; }
+  .greece-quiz .step[data-step="intro"] h1 { font-size: 23px; line-height: 1.04; }
+  .greece-quiz .step[data-step="intro"] .lead { font-size: 11px; line-height: 1.22; margin: 5px 0; }
+  .greece-quiz .step[data-step="intro"] .guide-card { margin: 5px 0; padding: 6px 8px; }
+  .greece-quiz .step[data-step="intro"] .guide-card small { line-height: 1.15; }
+}

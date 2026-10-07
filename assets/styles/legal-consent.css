@@ -1,0 +1,7 @@
+/* Consent text shared by lead forms across Nika Estate landing pages. */
+label.legal-consent{display:flex;align-items:flex-start;gap:8px;margin:12px 0;font-size:12px;line-height:1.35;font-weight:400;color:inherit;cursor:pointer}
+label.legal-consent input[type="checkbox"]{flex:none;width:16px;height:16px;margin:1px 0 0;accent-color:#ae8850}
+label.legal-consent span{font-weight:400}
+label.legal-consent a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+label.legal-consent a:hover{color:#986f32}
+label.legal-consent a:focus-visible{outline:2px solid #986f32;outline-offset:2px}
