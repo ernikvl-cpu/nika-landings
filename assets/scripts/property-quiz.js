@@ -19,6 +19,16 @@
     ineligible: ['Thank you', 100, 'Quiz complete'],
     success: ['Complete', 100, 'Thank you']
   };
+  if (form.querySelector('[data-step="timing"]')) {
+    // nika-landings: квиз с 4 вопросами (цель → тип → бюджет → сроки)
+    Object.assign(progress, {
+      intro: [progress.intro[0], 0, 'About 1 minute'],
+      purpose: ['Question 1 of 4', 20, 'Step 1 of 4'],
+      purchase: ['Question 2 of 4', 40, 'Step 2 of 4'],
+      budget: ['Question 3 of 4', 60, 'Step 3 of 4'],
+      timing: ['Question 4 of 4', 80, 'Step 4 of 4']
+    });
+  }
   if (turkish) {
     Object.assign(progress, {
       intro: ['Rehberiniz burada başlıyor', 0, 'Yaklaşık 1 dakika'],

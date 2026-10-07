@@ -307,7 +307,7 @@
       lead_id: payload.lead_id, fbclid: params.get('fbclid') || ''
     });
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach((k) => body.set(k, payload[k] || ''));
-    ['purchase_goal', 'unit_type', 'investment_budget', 'messenger', 'telegram'].forEach((k) => {
+    ['purchase_goal', 'unit_type', 'investment_budget', 'purchase_timing', 'messenger', 'telegram'].forEach((k) => {
       if (fields[k]) body.set(k, fields[k]);
     });
     // Наш сервер не отдаёт CORS-заголовки → no-cors: ответ не читаем, доставленный запрос = заявка принята.
