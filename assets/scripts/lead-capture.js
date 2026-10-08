@@ -307,6 +307,9 @@
       lead_id: payload.lead_id, fbclid: params.get('fbclid') || ''
     });
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach((k) => body.set(k, payload[k] || ''));
+    // для Conversions API (pilot-watch читает из примечания amo): cookie пикселя и user-agent
+    const cookie = (n) => (document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)')) || [])[1] || '';
+    [['fbp', cookie('_fbp')], ['fbc', cookie('_fbc')], ['ua', navigator.userAgent]].forEach(([k, v]) => { if (v) body.set(k, v); });
     ['purchase_goal', 'unit_type', 'investment_budget', 'purchase_timing', 'messenger', 'telegram'].forEach((k) => {
       if (fields[k]) body.set(k, fields[k]);
     });
