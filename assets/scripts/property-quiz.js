@@ -43,7 +43,20 @@
     });
   }
 
+  // воронка квиза в пиксель: каждый шаг — отдельное событие (один раз за визит), чтобы видеть, где уходят люди
+  const FUNNEL = { purpose: 'QuizStart', purchase: 'Quiz2Unit', budget: 'Quiz3Budget', timing: 'Quiz4Timing',
+    human: 'Quiz5Check', contact: 'Quiz6Contact' };
+  const tracked = new Set();
+  function trackStep(name) {
+    const ev = FUNNEL[name];
+    if (!ev || tracked.has(ev) || typeof window.fbq !== 'function') return;
+    tracked.add(ev);
+    const budget = (form.querySelector('[name="investment_budget"]:checked') || {}).value;
+    try { window.fbq('trackCustom', ev, { quiz: form.dataset.formName || document.title, ...(budget ? { budget } : {}) }); } catch (e) { /* аналитика не мешает квизу */ }
+  }
+
   function show(name) {
+    trackStep(name);
     document.body.dataset.quizStep = name;
     form.dataset.quizFinished = name === 'contact' || name === 'success' ? 'true' : 'false';
     form.dataset.disqualified = name === 'ineligible' ? 'true' : 'false';
