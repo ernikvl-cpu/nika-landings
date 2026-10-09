@@ -151,7 +151,8 @@
     if (form.dataset.botProtection !== 'true') return;
     const question = form.querySelector('[data-human-question]');
     const answer = form.elements.namedItem('human_check');
-    if (!question || !answer) return;
+    // без видимого примера на сложение (квизы с 09.10): защита — скрытое поле-ловушка и минимальное время заполнения
+    if (!question || !answer) { botChecks.set(form, { answer: null, startedAt: performance.now() }); return; }
     const left = 2 + Math.floor(Math.random() * 6);
     const right = 2 + Math.floor(Math.random() * 6);
     question.textContent = `${left} + ${right} = ?`;
@@ -200,7 +201,7 @@
     const trap = form.elements.namedItem('website');
     if (trap && text(trap.value)) return messages.failed;
     const answer = form.elements.namedItem('human_check');
-    if (!answer || text(answer.value) !== String(check.answer)) {
+    if (check.answer !== null && (!answer || text(answer.value) !== String(check.answer))) {
       return messages.answer;
     }
     if (form.matches('[data-quiz-form]')) {
