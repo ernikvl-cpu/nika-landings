@@ -280,6 +280,11 @@
       || Boolean(field && formDataObject(form)[field] === form.dataset.disqualifyValue);
   }
 
+  // диагностика отправки в пиксель: нажал «отправить», что заблокировало, ответ сервера (без персональных данных)
+  function trackSubmit(ev, data) {
+    try { if (typeof window.fbq === 'function') window.fbq('trackCustom', ev, data || {}); } catch (e) { /* не мешаем заявке */ }
+  }
+
   function send(form) {
     if (!pageConfig.endpoint || isDisqualified(form) || !form.checkValidity() || botCheckError(form)) return Promise.resolve(false);
     if (pendingForms.has(form)) return pendingForms.get(form);
@@ -313,13 +318,25 @@
     ['purchase_goal', 'unit_type', 'investment_budget', 'purchase_timing', 'messenger', 'telegram'].forEach((k) => {
       if (fields[k]) body.set(k, fields[k]);
     });
-    // Наш сервер не отдаёт CORS-заголовки → no-cors: ответ не читаем, доставленный запрос = заявка принята.
+    // Для go.nikaestate.ae воркер webhook-proxy ждёт ответа сервера и отдаёт его с CORS: «принято» — только если сервер
+    // ответил 200 и не {ok:false}. Пока воркер без CORS, браузер не даёт прочитать ответ (TypeError), но запрос
+    // уже ушёл — тогда, как раньше, считаем заявку отправленной (событие QuizSubmitUnconfirmed для учёта).
     const request = fetch(pageConfig.endpoint, {
       method: 'POST',
-      mode: 'no-cors',
       body,
       keepalive: true
-    }).then(async () => {
+    }).then(async (response) => {
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.ok === false) {
+        trackSubmit('QuizSubmitFail', { status: response.status });
+        return false;
+      }
+      return true;
+    }, (error) => {
+      trackSubmit('QuizSubmitUnconfirmed', { error: String(error && error.name || 'error') });
+      return true;
+    }).then((accepted) => {
+      if (!accepted) return false;
 
       rememberQuizSubmission(token);
 
@@ -349,12 +366,16 @@
         event.preventDefault();
         event.stopImmediatePropagation();
         if (isDisqualified(form)) return;
+        trackSubmit('QuizSubmitClick');
         if (!form.checkValidity()) {
+          const bad = form.querySelector(':invalid:not(fieldset)');
+          trackSubmit('QuizSubmitBlocked', { reason: 'invalid:' + ((bad && bad.name) || 'form') });
           form.reportValidity();
           return;
         }
         const botError = botCheckError(form);
         if (botError) {
+          trackSubmit('QuizSubmitBlocked', { reason: 'check:' + botError.slice(0, 40) });
           const status = form.querySelector('[data-form-status], .form-success');
           if (status) status.textContent = botError;
           return;
